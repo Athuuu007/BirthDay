@@ -1,33 +1,476 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=all-device, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Papa!</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        gold: {
+                            light: '#fcf6ba',
+                            DEFAULT: '#d4af37',
+                            dark: '#aa771c'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Gradient Gold Text */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* Custom Animations */
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .animate-float-delayed {
+            animation: float 6s ease-in-out 3s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .animate-heartbeat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.15); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.15); }
+            60% { transform: scale(1); }
+        }
+
+        .bounce-arrow {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 3D Tilt Card Base */
+        .tilt-wrapper {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+        
+        .tilt-card {
+            transition: transform 0.1s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .tilt-content {
+            transform: translateZ(50px);
+        }
+
+        /* Background Gradient Aura */
+        .bg-aura {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 100vh;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body>
-    <div class="wrapper">
-        <div class="lid one"></div>
-        <div class="lid two"></div>
-        <div class="envelope"></div>
-        <div class="letter">
-            <p>Hello
+<body class="antialiased selection:bg-gold selection:text-black">
 
-                &#128519;
+    <!-- Interactive Canvas Background for Gold Particles/Confetti -->
+    <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full -z-20 pointer-events-none"></canvas>
+    <div class="bg-aura"></div>
 
-
-
-
-
-
-                <center><h6>click on 'button' </h6></center>
+    <!-- 1. Hero Section -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 text-center">
+        <div class="space-y-6 z-10 max-w-4xl mx-auto reveal active">
+            <h2 class="text-gold-light tracking-widest uppercase text-sm md:text-lg font-medium opacity-80 mb-2">A Special Day For A Special Man</h2>
+            
+            <h1 class="font-serif text-5xl sm:text-7xl md:text-8xl font-bold mb-4 leading-tight animate-float">
+                Happy Birthday, <br/>
+                <span class="text-gradient-gold">Papa!</span>
+            </h1>
+            
+            <p class="text-gray-300 text-lg md:text-2xl font-light max-w-2xl mx-auto mt-6 animate-float-delayed">
+                To my anchor, my role model, and my greatest hero.
             </p>
-                
-                
-            >
+            
+            <div class="mt-12 flex justify-center text-gold text-4xl animate-heartbeat">
+                <!-- SVG Heart -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 drop-shadow-[0_0_15px_rgba(212,175,55,0.8)]">
+                  <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                </svg>
+            </div>
         </div>
-    </div>
-    <link rel="stylesheet" href="en.css"> 
-   <a href="second envelope.html" class="btn">button</a>
+
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 bounce-arrow text-gold opacity-70">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-8 h-8">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 5.25v-4.5m0 4.5h-4.5m4.5 0l-9-9m-9 9v-4.5m0 4.5h4.5m-4.5 0l9-9" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5L12 21l-7.5-7.5" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- 2. Featured Photo Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 relative z-10 w-full flex flex-col items-center justify-center">
+        <div class="reveal max-w-md mx-auto w-full">
+            <div class="relative group mt-4">
+                <!-- Glowing backdrop/frame effect -->
+                <div class="absolute -inset-2 bg-gradient-to-r from-gold-dark via-gold to-gold-light rounded-2xl blur-lg opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-300 animate-pulse"></div>
+                <!-- Image container -->
+                <div class="relative bg-[#0a0a0a] rounded-xl p-2 ring-1 ring-gold/40 shadow-2xl">
+                    <img src="FB_IMG_1766160715570.jpg" alt="Papa" class="w-full h-auto rounded-lg object-cover shadow-[0_0_20px_rgba(0,0,0,0.9)]">
+                    
+                    <!-- Decorative inner corners -->
+                    <div class="absolute top-4 left-4 w-4 h-4 border-t border-l border-gold opacity-60"></div>
+                    <div class="absolute top-4 right-4 w-4 h-4 border-t border-r border-gold opacity-60"></div>
+                    <div class="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-gold opacity-60"></div>
+                    <div class="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-gold opacity-60"></div>
+                </div>
+            </div>
+            <p class="text-center mt-10 text-gold-light font-serif italic text-2xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">My Hero</p>
+        </div>
+    </section>
+
+    <!-- 3. Heartfelt Messages Section -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 relative z-10 max-w-6xl mx-auto">
+        <div class="text-center mb-16 reveal">
+            <h2 class="font-serif text-3xl md:text-5xl text-gradient-gold inline-block mb-4">My Letter to You</h2>
+            <div class="h-1 w-24 bg-gold mx-auto rounded-full opacity-50"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            <!-- Card 1 -->
+            <div class="glass-panel p-8 md:p-10 rounded-3xl reveal relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <svg class="w-24 h-24 text-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                </div>
+                <h3 class="font-serif text-2xl md:text-3xl text-gold-light mb-4">My Guiding Light</h3>
+                <p class="text-gray-300 leading-relaxed text-lg font-light">
+                    Papa, you've always been the steady compass in my life. Through every storm and every sunshine, your wisdom has guided my path. I am the man I am today because I had you to look up to.
+                </p>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="glass-panel p-8 md:p-10 rounded-3xl reveal relative overflow-hidden group md:mt-12">
+                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <svg class="w-24 h-24 text-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <h3 class="font-serif text-2xl md:text-3xl text-gold-light mb-4">Endless Sacrifices</h3>
+                <p class="text-gray-300 leading-relaxed text-lg font-light">
+                    I know I might not say it enough, but I see everything you've done for our family. Your hard work, your silent sacrifices, and your unwavering support mean the entire world to me. Thank you.
+                </p>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="glass-panel p-8 md:p-10 rounded-3xl reveal relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <svg class="w-24 h-24 text-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                </div>
+                <h3 class="font-serif text-2xl md:text-3xl text-gold-light mb-4">Countless Memories</h3>
+                <p class="text-gray-300 leading-relaxed text-lg font-light">
+                    From teaching me how to ride a bike, to the late-night talks, to just being there when I needed a friend—every moment spent with you is a treasure I carry in my heart forever.
+                </p>
+            </div>
+
+             <!-- Card 4 -->
+             <div class="glass-panel p-8 md:p-10 rounded-3xl reveal relative overflow-hidden group md:mt-12">
+                <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity">
+                    <svg class="w-24 h-24 text-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.41l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.41zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>
+                </div>
+                <h3 class="font-serif text-2xl md:text-3xl text-gold-light mb-4">My Greatest Wish</h3>
+                <p class="text-gray-300 leading-relaxed text-lg font-light">
+                    On your birthday, I wish you infinite joy, perfect health, and peace. May this year bring you as much happiness as you have unconditionally given to everyone around you.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 3D Hover Photo Area -->
+    <section class="py-24 px-4 relative z-10 w-full flex flex-col items-center justify-center min-h-[80vh] overflow-hidden">
+        <div class="text-center mb-12 reveal">
+            <h2 class="font-serif text-3xl md:text-5xl text-gradient-gold inline-block mb-4">Unspoken Words</h2>
+            <p class="text-gray-400">Hover or tap on the card below</p>
+        </div>
+
+        <!-- 3D Tilt Container -->
+        <div class="tilt-wrapper reveal w-full max-w-md mx-auto">
+            <div id="tilt-card" class="tilt-card relative w-full aspect-[4/5] glass-panel rounded-2xl p-4 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.7)] border-white/10 cursor-pointer group flex items-center justify-center text-center">
+                
+                <!-- Inner Message Frame -->
+                <div class="tilt-content w-full h-full bg-white/5 border border-white/10 rounded-xl flex flex-col p-8 relative overflow-hidden backdrop-blur-md justify-center items-center">
+                    
+                    <!-- Decorative corner accents -->
+                    <div class="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-gold opacity-50"></div>
+                    <div class="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-gold opacity-50"></div>
+                    <div class="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-gold opacity-50"></div>
+                    <div class="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-gold opacity-50"></div>
+                    
+                    <!-- Glowing Heart Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 mb-8 text-gold drop-shadow-[0_0_15px_rgba(212,175,55,0.8)] animate-heartbeat">
+                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                    </svg>
+
+                    <!-- Emotional Marathi Message -->
+                    <p class="font-serif text-2xl md:text-3xl text-gradient-gold leading-snug font-medium italic tilt-content">
+                        "मी तुम्हाला समोर नाही बोलू शकत, पण I love you very much Papa"
+                    </p>
+                    
+                    <div class="mt-8 text-center tilt-content">
+                        <p class="text-xs text-gray-400 uppercase tracking-widest">My True Feelings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Glowing Footer -->
+    <footer class="py-12 px-4 relative z-10 text-center border-t border-white/10 bg-black/40 backdrop-blur-sm mt-12">
+        <div class="reveal flex flex-col items-center justify-center">
+            <h3 class="font-serif text-2xl text-gray-200 mb-2">Happy Birthday once again!</h3>
+            <div class="flex items-center space-x-2 mt-4 text-gold animate-pulse">
+                <span class="h-[1px] w-12 bg-gold/50"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                </svg>
+                <span class="h-[1px] w-12 bg-gold/50"></span>
+            </div>
+            <p class="mt-6 text-xl tracking-wide text-gray-300">
+                Made with love by your son, <br/>
+                <span class="font-serif text-3xl text-gradient-gold block mt-2 font-bold drop-shadow-[0_0_10px_rgba(212,175,55,0.4)]">Atharva</span>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // 1. Scroll Reveal Logic (Intersection Observer)
+        document.addEventListener('DOMContentLoaded', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) {
+                        return;
+                    } else {
+                        entry.target.classList.add('active');
+                        // Optional: stop observing once revealed
+                        // observer.unobserve(entry.target); 
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+
+        // 2. 3D Tilt Effect Logic for the Photo Card
+        const tiltCard = document.getElementById('tilt-card');
+        
+        // Use pointer events to handle both mouse and touch elegantly
+        const handleMove = (e) => {
+            if(!tiltCard) return;
+            const rect = tiltCard.getBoundingClientRect();
+            
+            // Normalize coordinates based on event type
+            let clientX, clientY;
+            if(e.type.includes('touch')) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            const x = clientX - rect.left; // x position within element
+            const y = clientY - rect.top;  // y position within element
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Calculate rotation (max 15 degrees)
+            const rotateX = ((y - centerY) / centerY) * -15; 
+            const rotateY = ((x - centerX) / centerX) * 15;
+
+            tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        };
+
+        const handleLeave = () => {
+            if(!tiltCard) return;
+            tiltCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+        };
+
+        tiltCard.addEventListener('mousemove', handleMove);
+        tiltCard.addEventListener('touchmove', handleMove);
+        
+        tiltCard.addEventListener('mouseleave', handleLeave);
+        tiltCard.addEventListener('touchend', handleLeave);
+
+
+        // 3. Custom Canvas Particle System (Golden Confetti / Embers)
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray = [];
+        
+        // Set canvas size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Resize event
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles(); // Re-init on resize to cover new area
+        });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 4 + 1; // 1 to 5 radius
+                // Drift horizontally and fall downwards slowly
+                this.speedX = Math.random() * 1 - 0.5; 
+                this.speedY = Math.random() * 1.5 + 0.5; 
+                this.opacity = Math.random() * 0.5 + 0.2; // 0.2 to 0.7
+                
+                // Color variants (all gold/amber themed)
+                const colors = [
+                    `rgba(212, 175, 55, ${this.opacity})`, // Classic Gold
+                    `rgba(252, 246, 186, ${this.opacity})`, // Light Gold
+                    `rgba(170, 119, 28, ${this.opacity})`   // Dark Gold
+                ];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                // For wave motion
+                this.angle = Math.random() * Math.PI * 2;
+                this.spin = Math.random() * 0.1 - 0.05;
+            }
+
+            update() {
+                this.y += this.speedY;
+                // Add slight sine wave motion to X axis
+                this.x += Math.sin(this.angle) * 0.5 + this.speedX;
+                this.angle += this.spin;
+
+                // Loop back to top when they fall off screen
+                if (this.y > canvas.height + 10) {
+                    this.y = -10;
+                    this.x = Math.random() * canvas.width;
+                }
+                
+                // Wrap around X axis
+                if (this.x > canvas.width + 10) this.x = -10;
+                if (this.x < -10) this.x = canvas.width + 10;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Add slight glow
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            // Calculate particle amount based on screen width to prevent lag on mobile
+            let numberOfParticles = Math.floor(canvas.width / 8); 
+            // Cap it for performance
+            if (numberOfParticles > 150) numberOfParticles = 150; 
+            
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Start animation
+        initParticles();
+        animateParticles();
+    </script>
 </body>
 </html>
